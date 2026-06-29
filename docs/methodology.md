@@ -236,7 +236,7 @@ Many things related to security and login.
 ## Inspiration
 
 The openDesk Edu OpenSpec is inspired by:
-- [Fission AI OpenSpec](https://fission.ai/openspec) format
+- [OpenSpec format](https://github.com/opendesk-edu/openspec.opendesk-edu.org)
 - [CNCF Landscape](https://landscape.cncf.io) categorization
 - [Keep a Changelog](https://keepachangelog.com) versioning
 - [Conventional Commits](https://www.conventionalcommits.org) standardization

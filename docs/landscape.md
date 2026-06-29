@@ -8,30 +8,36 @@ description: Interactive visual map of the openDesk Edu services with search, fi
 
 Explore the complete openDesk Edu ecosystem through our interactive landscape visualization. Browse, search, and filter all integrated services.
 
-<div style={{
-  position: 'relative',
-  paddingBottom: '75%',
-  height: 0,
-  marginTop: '2rem',
-  marginBottom: '2rem',
-  borderRadius: '12px',
-  overflow: 'hidden',
-  boxShadow: '0 8px 24px rgba(0,0,0,0.15)',
-  border: '2px solid #06ffa5'
-}}>
-  <iframe
-    src="https://landscape.opendesk-edu.org"
+<div
+  style={{
+    textAlign: 'center',
+    margin: '2rem 0',
+    padding: '3rem 1rem',
+    background: 'linear-gradient(135deg, #0a0e27 0%, #1a1e47 100%)',
+    borderRadius: '12px',
+    border: '2px solid #06ffa5'
+  }}
+>
+  <p style={{fontSize: '1.2rem', marginBottom: '2rem', color: '#fff'}}>
+    🌄 Interactive landscape — opens in new tab
+  </p>
+  <a
+    href="https://landscape.opendesk-edu.org"
+    target="_blank"
+    rel="noopener noreferrer"
     style={{
-      position: 'absolute',
-      top: 0,
-      left: 0,
-      width: '100%',
-      height: '100%',
-      border: 0
+      display: 'inline-block',
+      padding: '16px 48px',
+      background: '#06ffa5',
+      color: '#0a0e27',
+      textDecoration: 'none',
+      borderRadius: '8px',
+      fontWeight: 600,
+      fontSize: '1.2rem'
     }}
-    title="openDesk Edu Landscape - Interactive Service Map"
-    loading="lazy"
-  />
+  >
+    🌄 Open Landscape
+  </a>
 </div>
 
 ## About the Landscape

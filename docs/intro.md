@@ -84,4 +84,4 @@ This OpenSpec is licensed under [Apache-2.0](https://www.apache.org/licenses/LIC
 
 ---
 
-**Maintained by the openDesk Edu Community** • Inspired by the [Fission AI OpenSpec](https://fission.ai/openspec) format
+**Maintained by the openDesk Edu Community** • OpenSpec format — [contribute on GitHub](https://github.com/opendesk-edu/openspec.opendesk-edu.org)
