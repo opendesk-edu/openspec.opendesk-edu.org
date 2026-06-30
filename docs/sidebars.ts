@@ -1,0 +1,102 @@
+import type {SidebarsConfig} from '@docusaurus/plugin-content-docs';
+
+const sidebars: SidebarsConfig = {
+  mainSidebar: [
+    {
+      type: 'doc',
+      id: '_registry/index',
+      label: 'Spec Index',
+    },
+    {
+      type: 'category',
+      label: 'Platform',
+      items: [
+        {type: 'doc', id: 'platform/deployment'},
+        {type: 'doc', id: 'platform/environments'},
+        {type: 'doc', id: 'platform/networking'},
+        {type: 'doc', id: 'platform/security'},
+        {type: 'doc', id: 'platform/security/compliance-checklists'},
+        {type: 'doc', id: 'platform/security/threat-model'},
+        {type: 'doc', id: 'platform/storage'},
+        {type: 'doc', id: 'platform/backup'},
+        {type: 'doc', id: 'platform/disaster-recovery'},
+        {type: 'doc', id: 'platform/monitoring'},
+        {type: 'doc', id: 'platform/resource-sizing'},
+        {type: 'doc', id: 'platform/performance'},
+        {type: 'doc', id: 'platform/operations'},
+        {type: 'doc', id: 'platform/upgrade-migration'},
+        {type: 'doc', id: 'platform/capacity-planning'},
+        {type: 'doc', id: 'platform/secret-derivation'},
+        {type: 'doc', id: 'platform/glossary'},
+      ],
+    },
+    {
+      type: 'category',
+      label: 'Auth',
+      items: [
+        {type: 'doc', id: 'auth/oidc'},
+        {type: 'doc', id: 'auth/saml'},
+        {type: 'doc', id: 'auth/ldap'},
+        {type: 'doc', id: 'auth/federation'},
+      ],
+    },
+    {
+      type: 'category',
+      label: 'Integrations',
+      items: [
+        {type: 'doc', id: 'integrations/intercom'},
+        {type: 'doc', id: 'integrations/provisioning'},
+        {type: 'doc', id: 'integrations/file-store'},
+        {type: 'doc', id: 'integrations/cross-service-workflows'},
+        {type: 'doc', id: 'integrations/api-contracts'},
+        {type: 'doc', id: 'integrations/lti'},
+      ],
+    },
+    {
+      type: 'category',
+      label: 'Registry',
+      items: [
+        {type: 'doc', id: '_registry/interconnection-matrix'},
+        {type: 'doc', id: '_registry/test-mapping'},
+        {type: 'doc', id: '_registry/test-coverage-gaps'},
+        {type: 'doc', id: '_registry/implementation-reference'},
+      ],
+    },
+    {
+      type: 'category',
+      label: 'Methodology',
+      items: [
+        {type: 'doc', id: 'methodology/spec-writing'},
+      ],
+    },
+  ],
+  servicesSidebar: [
+    {type: 'doc', id: 'services/nubus', label: 'Nubus'},
+    {type: 'doc', id: 'services/nextcloud', label: 'Nextcloud'},
+    {type: 'doc', id: 'services/opencloud', label: 'OpenCloud'},
+    {type: 'doc', id: 'services/ilias', label: 'ILIAS'},
+    {type: 'doc', id: 'services/moodle', label: 'Moodle'},
+    {type: 'doc', id: 'services/bigbluebutton', label: 'BigBlueButton'},
+    {type: 'doc', id: 'services/xwiki', label: 'XWiki'},
+    {type: 'doc', id: 'services/collabora', label: 'Collabora'},
+    {type: 'doc', id: 'services/cryptpad', label: 'CryptPad'},
+    {type: 'doc', id: 'services/element', label: 'Element'},
+    {type: 'doc', id: 'services/ox-appsuite', label: 'OX AppSuite'},
+    {type: 'doc', id: 'services/sogo', label: 'SOGo'},
+    {type: 'doc', id: 'services/jitsi', label: 'Jitsi'},
+    {type: 'doc', id: 'services/openproject', label: 'OpenProject'},
+    {type: 'doc', id: 'services/notes', label: 'Notes'},
+    {type: 'doc', id: 'services/bookstack', label: 'BookStack'},
+    {type: 'doc', id: 'services/zammad', label: 'Zammad'},
+    {type: 'doc', id: 'services/planka', label: 'Planka'},
+    {type: 'doc', id: 'services/dovecot-postfix', label: 'Dovecot / Postfix'},
+    {type: 'doc', id: 'services/etherpad', label: 'Etherpad'},
+    {type: 'doc', id: 'services/limesurvey', label: 'LimeSurvey'},
+    {type: 'doc', id: 'services/self-service-password', label: 'Self-Service Password'},
+    {type: 'doc', id: 'services/typo3', label: 'TYPO3 CMS'},
+    {type: 'doc', id: 'services/drawio', label: 'Draw.io'},
+    {type: 'doc', id: 'services/excalidraw', label: 'Excalidraw'},
+  ],
+};
+
+export default sidebars;

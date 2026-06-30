@@ -1,0 +1,28 @@
+services:
+  docusaurus:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "3000:80"
+    volumes:
+      - ../specs:/app/specs-repo/specs:ro
+      - ../METADATA.yml:/app/specs-repo/METADATA.yml:ro
+      - ../METHODOLOGY.md:/app/specs-repo/METHODOLOGY.md:ro
+    restart: unless-stopped
+
+  dev:
+    build:
+      context: .
+      dockerfile: Dockerfile.dev
+    ports:
+      - "3000:3000"
+      - "3001:3001"
+    volumes:
+      - .:/app
+      - ../specs:/app/specs-repo/specs:ro
+      - ../METADATA.yml:/app/specs-repo/METADATA.yml:ro
+      - ../METHODOLOGY.md:/app/specs-repo/METHODOLOGY.md:ro
+    environment:
+      - LOCAL_DEVELOPMENT=true
+    command: npm run start -- --host 0.0.0.0
