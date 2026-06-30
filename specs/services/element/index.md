@@ -144,6 +144,12 @@ Synapse MAY support federation with external Matrix homeservers.
 - AND only domains in `domainAllowList` can federate
 - AND federation uses a separate TLS certificate (`opendesk-certificates-synapse-tls`)
 
+## API Contracts
+
+- [Keycloak OIDC Token](../../integrations/api-contracts/#contract-keycloak-oidc-token-endpoint) — authentication
+- [S3 Object Storage](../../integrations/api-contracts/#contract-s3-object-storage) — file/media storage
+- [Intercom Silent Login](../../integrations/api-contracts/#contract-intercom-silent-login) — portal tile SSO navigation
+
 ## Depends On
 
 Keycloak (OIDC, client: `opendesk-matrix`), PostgreSQL (`synapse` DB), MinIO/S3 (media), Redis (appservice transactions), Postfix (email notifications), TURN server, HAProxy Ingress, Intercom Service, Nubus Portal (tile, logout redirect)

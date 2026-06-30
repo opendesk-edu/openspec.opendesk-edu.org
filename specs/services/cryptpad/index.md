@@ -26,6 +26,9 @@ This spec defines:
 - Public pad sharing (registration restricted prevents this)
 - Server-side document storage (persistence is Nextcloud-managed)
 
+## API Contracts
+
+- [Keycloak OIDC Token](../../integrations/api-contracts/#contract-keycloak-oidc-token-endpoint) — authentication
 ## Depends On
 
 - **Nextcloud** (integration platform): Provides user authentication, document storage, and seamless editing integration

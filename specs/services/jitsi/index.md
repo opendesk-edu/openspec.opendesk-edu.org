@@ -190,6 +190,9 @@ headless recording). All other capabilities SHALL be dropped.
 - AND the root filesystem is read-only
 - AND no capabilities are granted
 
+## API Contracts
+
+- [Keycloak OIDC Token](../../integrations/api-contracts/#contract-keycloak-oidc-token-endpoint) — authentication
 ## Depends On
 
 - Keycloak (OIDC, client `opendesk-jitsi`, realm `opendesk`)

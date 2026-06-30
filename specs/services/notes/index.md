@@ -107,6 +107,10 @@ Notes SHALL support custom theme configuration via a ConfigMap.
 - AND `runtime-env.js` is mounted with environment variables
 - AND the `openDesk` frontend theme is applied
 
+## API Contracts
+
+- [Keycloak OIDC Token](../../integrations/api-contracts/#contract-keycloak-oidc-token-endpoint) — authentication
+- [S3 Object Storage](../../integrations/api-contracts/#contract-s3-object-storage) — file/media storage
 ## Depends On
 
 Keycloak (OIDC, client: `opendesk-notes`), PostgreSQL (`notes` DB), MinIO/S3 (attachments), Redis (Django cache, database 7), Postfix (email), HAProxy Ingress, Nubus Portal (tile, login/logout redirect)

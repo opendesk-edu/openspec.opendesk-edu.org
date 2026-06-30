@@ -144,6 +144,9 @@ Etherpad SHALL support limited Markdown-style formatting:
   (read/write per pad, no user-based ACL). For more granular permissions,
   consider CryptPad or HedgeDoc.
 
+## API Contracts
+
+- [Keycloak OIDC Token](../../integrations/api-contracts/#contract-keycloak-oidc-token-endpoint) — authentication
 ## Depends On
 
 Keycloak (OIDC), PostgreSQL (embedded), HAProxy Ingress

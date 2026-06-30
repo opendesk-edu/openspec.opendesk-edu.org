@@ -177,6 +177,9 @@ environment variable is set.
 - AND a WebSocket monitor connects to `collabora-controller-cool-controller:9000`
 - AND the indirection endpoint is configured at `/controller/routeToken`
 
+## API Contracts
+
+- [WOPI Discovery + CheckFileInfo](../../integrations/api-contracts/#contract-wopi-discovery-and-checkfileinfo) — office document editing
 ## Depends On
 
 HAProxy Ingress (TLS termination, affinity routing, admin URL blocking)

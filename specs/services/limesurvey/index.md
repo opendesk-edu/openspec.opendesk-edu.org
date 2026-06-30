@@ -129,6 +129,9 @@ default.
 - **Anonymous by default**: Surveys are anonymous by default. Data protection
   compliance is achieved automatically (no user ID storage in responses).
 
+## API Contracts
+
+- [LDAP Bind/Search](../../integrations/api-contracts/#contract-ldap-bind-and-search) — user directory lookup
 ## Depends On
 
 OpenLDAP (direct bind), MariaDB (separate database),

@@ -144,6 +144,10 @@ XWiki SHALL support enterprise-specific features when `OPENDESK_ENTERPRISE=true`
 - THEN Collabora Code integration is enabled (`isEnabled: 1`)
 - AND ODT/DOCX export is available via `http://collabora:9980`
 
+## API Contracts
+
+- [Keycloak OIDC Token](../../integrations/api-contracts/#contract-keycloak-oidc-token-endpoint) — authentication
+- [LDAP Bind/Search](../../integrations/api-contracts/#contract-ldap-bind-and-search) — user directory lookup
 ## Depends On
 
 Keycloak (OIDC, client: `opendesk-xwiki`), PostgreSQL or MariaDB, OpenLDAP, Postfix, Nubus Portal (navigation), Collabora (enterprise ODT export)

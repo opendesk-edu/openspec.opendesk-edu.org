@@ -154,6 +154,9 @@ SAML-authenticated users are assigned a default role on first login (typically
   BookStack does NOT directly integrate with Keycloak OIDC — it uses Shibboleth
   protocol to Keycloak's SAML endpoint.
 
+## API Contracts
+
+- [Keycloak SAML 2.0 SP-SSO](../../integrations/api-contracts/#contract-keycloak-saml-20-sp-initiated-sso) — SAML authentication
 ## Depends On
 
 Keycloak (SAML 2.0 IdP, acting as Shibboleth SP), MariaDB (separate database),

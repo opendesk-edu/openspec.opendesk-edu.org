@@ -163,6 +163,12 @@ The UMS REST API path is `/univention/udm` and requires HTTP BASIC authenticatio
   Direct LDAP schema mods are NOT supported by Nubus upstream.
 - **UMS REST API**: Existing credentials (UMS admin user: `ums-admin` / `ums-admin`).
 
+## API Contracts
+
+- [Keycloak OIDC Token](../../integrations/api-contracts/#contract-keycloak-oidc-token-endpoint) — authentication
+- [Keycloak SAML 2.0 SP-SSO](../../integrations/api-contracts/#contract-keycloak-saml-20-sp-initiated-sso) — SAML authentication
+- [Nubus Portal Navigation](../../integrations/api-contracts/#contract-nubus-portal-navigation) — application tiles
+- [LDAP Bind/Search](../../integrations/api-contracts/#contract-ldap-bind-and-search) — user directory lookup
 ## Depends On
 
 PostgreSQL (Keycloak + UMS), Redis (optional for UMS), HAProxy Ingress

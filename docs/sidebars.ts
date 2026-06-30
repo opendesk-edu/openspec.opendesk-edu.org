@@ -78,6 +78,15 @@ const sidebars: SidebarsConfig = {
     },
   ],
   servicesSidebar: [
+    {type: 'category', label: 'Infrastructure', items: [
+      {type: 'doc', id: 'services/keycloak', label: 'Keycloak'},
+      {type: 'doc', id: 'services/postgresql', label: 'PostgreSQL'},
+      {type: 'doc', id: 'services/mariadb', label: 'MariaDB'},
+      {type: 'doc', id: 'services/redis', label: 'Redis'},
+      {type: 'doc', id: 'services/minio', label: 'MinIO'},
+      {type: 'doc', id: 'services/cert-manager', label: 'cert-manager'},
+      {type: 'doc', id: 'services/haproxy-ingress', label: 'HAProxy Ingress'},
+    ]},
     {type: 'doc', id: 'services/nubus', label: 'Nubus'},
     {type: 'doc', id: 'services/nextcloud', label: 'Nextcloud'},
     {type: 'doc', id: 'services/opencloud', label: 'OpenCloud'},

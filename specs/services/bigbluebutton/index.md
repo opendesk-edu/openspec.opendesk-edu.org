@@ -163,6 +163,10 @@ BBB SHALL have a PodDisruptionBudget to ensure availability during node maintena
 - THEN at least one Greenlight pod remains available
 - AND users can continue creating and joining rooms
 
+## API Contracts
+
+- [Keycloak SAML 2.0 SP-SSO](../../integrations/api-contracts/#contract-keycloak-saml-20-sp-initiated-sso) — SAML authentication
+- [BBB Greenlight Room API](../../integrations/api-contracts/#contract-bbb-greenlight-room-api) — room creation/management
 ## Depends On
 
 Keycloak (SAML 2.0 Shibboleth SP), PostgreSQL (`greenlight` DB), Redis (session cache), RWX PVC (recordings), BBB backend server (media processing, managed separately), HAProxy Ingress, Nubus Portal (tile)

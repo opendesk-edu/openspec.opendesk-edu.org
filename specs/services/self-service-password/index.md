@@ -116,6 +116,9 @@ updated. Users must re-authenticate with the new password at next Keycloak login
 - **Direct LDAP integration**: SSP does NOT use Keycloak OIDC. It directly
   binds to OpenLDAP. This is intentional for password security (direct to source).
 
+## API Contracts
+
+- [LDAP Bind/Search](../../integrations/api-contracts/#contract-ldap-bind-and-search) — user directory lookup
 ## Depends On
 
 OpenLDAP (direct bind), HAProxy Ingress

@@ -178,6 +178,10 @@ ILIAS SHALL run as a non-root user with dropped capabilities.
 - AND all Linux capabilities are dropped
 - AND `seccompProfile: RuntimeDefault` is applied
 
+## API Contracts
+
+- [Keycloak SAML 2.0 SP-SSO](../../integrations/api-contracts/#contract-keycloak-saml-20-sp-initiated-sso) — SAML authentication
+- [S3 Object Storage](../../integrations/api-contracts/#contract-s3-object-storage) — file/media storage
 ## Depends On
 
 Keycloak (SAML 2.0 Shibboleth SP), MariaDB/MariaDB Galera (primary DB), MinIO/S3 (course files), Redis (optional caching), HAProxy Ingress, Nubus Portal (tile configuration), Intercom Service (silent login), Dovecot (IMAP for SOGo interop)

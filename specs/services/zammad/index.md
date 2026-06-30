@@ -89,6 +89,10 @@ Zammad SHALL persist ticket data, attachments, and configuration.
 - THEN the attachment is stored in the PVC
 - AND survives pod restarts
 
+## API Contracts
+
+- [Keycloak SAML 2.0 SP-SSO](../../integrations/api-contracts/#contract-keycloak-saml-20-sp-initiated-sso) — SAML authentication
+- [Postfix SMTP Submission](../../integrations/api-contracts/#contract-postfix-smtp-submission) — email sending
 ## Depends On
 
 Keycloak (SAML 2.0), PostgreSQL (`zammad` DB), Redis (search cache, Faye WebSocket), Elasticsearch, Postfix (email), HAProxy Ingress, Nubus Portal (tile)

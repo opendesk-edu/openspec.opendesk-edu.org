@@ -90,6 +90,9 @@ via the TYPO3 Extension Manager (backend UI).
 - OR uploaded as ZIP files
 - AND installed extensions are enabled by default
 
+## API Contracts
+
+- [Keycloak OIDC Token](../../integrations/api-contracts/#contract-keycloak-oidc-token-endpoint) — authentication
 ## Depends On
 
 - Keycloak (OIDC client `opendesk-typo3`, realm `opendesk`)
@@ -139,6 +142,9 @@ via the TYPO3 Extension Manager (backend UI).
 - **OIDC via extension**: OIDC authentication is provided by the `myprojectopenid`
   TYPO3 extension (or similar), not built-in to TYPO3 core.
 
+## API Contracts
+
+- [Keycloak OIDC Token](../../integrations/api-contracts/#contract-keycloak-oidc-token-endpoint) — authentication
 ## Depends On
 
 Keycloak (OIDC client `opendesk-typo3`), MariaDB (embedded), HAProxy Ingress

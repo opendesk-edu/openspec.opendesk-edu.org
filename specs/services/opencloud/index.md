@@ -159,6 +159,14 @@ OpenCloud SHALL expose liveness and readiness probes.
 - THEN the container responds on port 8080
 - AND unhealthy containers are restarted by Kubernetes
 
+## API Contracts
+
+- [Keycloak OIDC Token](../../integrations/api-contracts/#contract-keycloak-oidc-token-endpoint) — authentication
+- [S3 Object Storage](../../integrations/api-contracts/#contract-s3-object-storage) — file/media storage
+- [WOPI Discovery + CheckFileInfo](../../integrations/api-contracts/#contract-wopi-discovery-and-checkfileinfo) — office document editing
+- [WOPI SaveChild](../../integrations/api-contracts/#contract-wopi-savechild-endpoint) — new document creation
+- [Intercom Silent Login](../../integrations/api-contracts/#contract-intercom-silent-login) — portal tile SSO navigation
+
 ## Depends On
 
 Keycloak (OIDC, client: `opendesk-opencloud`), MariaDB (metadata, user profiles), MinIO/S3 (CS3 file storage), HAProxy Ingress (TLS termination), Collabora (WOPI delegate), Intercom Service (silent login for Filepicker), Nubus Portal (tile), Dovecot (IMAP for SOGo interop via WebDAV)

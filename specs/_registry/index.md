@@ -72,6 +72,18 @@ Wave 6 — Stateless tools (no dependencies):
 | [Self-Service Password](../services/self-service-password/) | LDAP | — | — | — | GPL-3.0 | — |
 | [TYPO3 CMS](../services/typo3/) | OIDC | MariaDB | — | — | Apache-2.0 | — |
 
+### Infrastructure Services (Wave 0)
+
+| Service | Spec | Purpose |
+|---------|------|---------|
+| [Keycloak](../services/keycloak/) | OIDC/SAML IdP | Identity provider, token issuance, SSO |
+| [PostgreSQL](../services/postgresql/) | — | Relational database (Keycloak, Element, Notes, Planka, SOGo, XWiki, Dovecot) |
+| [MariaDB](../services/mariadb/) | — | Relational database with Galera HA (Nextcloud, OpenCloud, OX, ILIAS, Moodle, BBB, etc.) |
+| [Redis](../services/redis/) | — | Distributed cache/session store (Keycloak, Nextcloud, Element, Notes, Intercom) |
+| [MinIO](../services/minio/) | — | S3-compatible object storage (Nextcloud, OpenCloud, ILIAS, Notes, backups) |
+| [cert-manager](../services/cert-manager/) | — | TLS certificate management (ACME Let's Encrypt, institutional certs) |
+| [HAProxy Ingress](../services/haproxy-ingress/) | — | Ingress controller, TLS termination, HTTP routing |
+
 ## Auth Methods
 
 | Method | Services | Spec |

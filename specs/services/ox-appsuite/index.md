@@ -23,6 +23,13 @@ This spec defines:
 - Email delivery infrastructure (see dovecot-postfix spec)
 - Advanced email filtering (server-side Sieve rules outside scope)
 
+## API Contracts
+
+- [Keycloak SAML 2.0 SP-SSO](../../integrations/api-contracts/#contract-keycloak-saml-20-sp-initiated-sso) — SAML authentication
+- [Dovecot IMAP](../../integrations/api-contracts/#contract-dovecot-imap) — email access
+- [Postfix SMTP Submission](../../integrations/api-contracts/#contract-postfix-smtp-submission) — email sending
+- [Intercom Silent Login](../../integrations/api-contracts/#contract-intercom-silent-login) — portal tile SSO navigation
+
 ## Depends On
 
 - **MariaDB** (database): Stores persistent groupware data including emails, calendar entries, contacts, tasks

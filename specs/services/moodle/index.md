@@ -168,6 +168,9 @@ Moodle SHALL have a PodDisruptionBudget to ensure availability during node maint
 - THEN at least one Moodle pod remains available
 - AND students can continue accessing courses
 
+## API Contracts
+
+- [Keycloak SAML 2.0 SP-SSO](../../integrations/api-contracts/#contract-keycloak-saml-20-sp-initiated-sso) — SAML authentication
 ## Depends On
 
 Keycloak (SAML 2.0 Shibboleth SP), MariaDB (`moodle` DB, external `moodle-mariadb`), CephFS RWX PVC, HAProxy Ingress, Nubus Portal (tile), Intercom Service (cross-app SSO)

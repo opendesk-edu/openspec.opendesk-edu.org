@@ -23,6 +23,10 @@ This spec defines:
 - Resource leveling algorithms (manual scheduling only)
 - Multi-tenant SaaS mode (single-organization deployment only)
 
+## API Contracts
+
+- [Keycloak SAML 2.0 SP-SSO](../../integrations/api-contracts/#contract-keycloak-saml-20-sp-initiated-sso) — SAML authentication
+- [S3 Object Storage](../../integrations/api-contracts/#contract-s3-object-storage) — file/media storage
 ## Depends On
 
 - **PostgreSQL** (database): Stores persistent data including projects, work packages, users, configurations
