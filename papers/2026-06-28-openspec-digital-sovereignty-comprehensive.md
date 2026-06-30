@@ -5,7 +5,7 @@ authors:
   - "Tobias Weiß"
   - "openDesk Edu Contributors"
 date: 2026-06-28
-version: 1.0
+version: 1.1
 status: Draft for Review
 keywords:
   - Digital Sovereignty
@@ -27,13 +27,15 @@ abstract: |
   costs, extraterritorial data exposure, and unilateral vendor decision-making.
   This paper presents a complete solution: the OpenSpec framework — a
   comprehensive, machine-verifiable specification methodology for building
-  and operating digital sovereign workplaces — paired with the Ralph Loop,
-  a continuous self-improvement methodology that prevents documentation
-  regression. We present the openDesk Edu platform as a production-deployed
-  case study, integrating 25+ open-source services at HRZ Marburg on a
-  9-node K3s cluster. Starting from 0% specification compliance, we achieved
-  100% coverage across four critical documentation dimensions through an
-  automated CI-driven improvement pipeline. We provide empirical evidence
+  and operating digital sovereign workplaces — paired with integration contracts
+  that bind service specifications to the platform's operational requirements
+  through schema-validated manifests, the Ralph Loop continuous self-improvement
+  methodology that prevents documentation regression, and production evidence
+  from the openDesk Edu ecosystem. We present the openDesk Edu platform as a
+  production-deployed case study, integrating 25+ open-source services at HRZ
+  Marburg on a 9-node K3s cluster. Starting from 0% specification compliance,
+  we achieved 100% coverage across four critical documentation dimensions through
+  an automated CI-driven improvement pipeline. We provide empirical evidence
   of 80-90% cost reduction compared to equivalent SaaS stacks, demonstrate
   GDPR compliance by design, detail integration with the DFN-AAI federation,
   and present a five-phase repeatable roadmap for institutions seeking
@@ -127,10 +129,11 @@ The **OpenSpec framework** meets this challenge by providing not just another te
 This paper makes the following contributions:
 
 1. **The OpenSpec framework**: A complete methodology for machine-verifiable system specifications
-2. **The Ralph Loop**: A continuous self-improvement methodology for preventing documentation regression
-3. **Production evidence**: Empirical data from a real-world deployment serving European educational institutions
-4. **Cost analysis**: Detailed TCO comparison between proprietary SaaS and sovereign alternatives
-5. **Implementation roadmap**: A phased approach for institutions to achieve digital sovereignty
+2. **Integration contracts**: Schema-validated manifests that bind service specifications to platform operational requirements
+3. **The Ralph Loop**: A continuous self-improvement methodology for preventing documentation regression
+4. **Production evidence**: Empirical data from a real-world deployment serving European educational institutions
+5. **Cost analysis**: Detailed TCO comparison between proprietary SaaS and sovereign alternatives
+6. **Implementation roadmap**: A phased approach for institutions to achieve digital sovereignty
 
 ## 2. The OpenSpec Framework
 
@@ -199,6 +202,99 @@ Every service specification follows a consistent five-pillar structure:
 ```
 
 This structure is inspired by the **Fission AI OpenSpec format**, extended with production deployment validation and the continuous improvement methodology.
+
+### 2.4 Integration Contracts: Machine-Verifiable Service Agreements
+
+A specification framework that describes systems but does not verify their integration contracts remains incomplete. In a platform of 25+ services, each with distinct authentication requirements, storage needs, routing rules, and observability endpoints, the integration surface area is vast and prone to silent drift. A service specification may accurately describe its architecture while silently diverging from the platform contract it was designed to satisfy.
+
+The **Integration Contract** component addresses this by embedding a structured, machine-verifiable manifest directly into each service specification. Every service that integrates with the openDesk core platform declares its contract as a fenced YAML block matching a shared JSON Schema — the `opendesk_core.schema.json`.
+
+**The Contract Schema.** The schema defines six required domains that every integrated service must declare:
+
+```
+┌─────────────────────────────────────────────────┐
+│  app          name, version, contract version  │
+│  identity     SSO protocol, client config       │
+│  portal       navigation tile registration       │
+│  routing      hostname, port, TLS                │
+│  persistence  datastore requirements             │
+│  observability health, metrics, logging        │
+└─────────────────────────────────────────────────┘
+```
+
+Each domain maps directly to an operational concern. The `identity` section tells the IAM layer which Keycloak client to provision. The `routing` section tells the ingress layer how to route traffic. The `persistence` section tells the operations layer which databases to provision. The `observability` section tells the monitoring layer where to find health and metrics endpoints. No domain is optional — a service that authenticates users must declare its identity contract; a service that stores data must declare its persistence contract; a service that is reachable must declare its routing contract.
+
+**Embedding in Specifications.** Each service specification contains the contract as a structured section, positioned between the header and the narrative content:
+
+````markdown
+## Integration Contract
+
+```yaml
+app:
+  name: nextcloud
+  coreContract: "2.1.0"
+identity:
+  sso:
+    protocol: saml
+    clientId: nextcloud
+    clientType: confidential
+portal:
+  displayName: Nextcloud
+  entryUrl: /nextcloud/
+routing:
+  hostname: nextcloud.opendesk-edu.org
+  servicePort: 8080
+persistence:
+  datastores: [mariadb, s3, redis]
+observability:
+  healthPath: /status.php
+  metricsPath: /metrics
+```
+````
+
+This placement is deliberate. The contract is the first thing a reader encounters — before architecture diagrams, before requirement scenarios, before operational procedures. This establishes the service's integration identity immediately and ensures the contract is always co-located with the specification it governs.
+
+**Machine Verification.** Contracts are validated in CI against the shared JSON Schema using `ajv`. Every merge request that modifies a service specification triggers contract validation:
+
+```
+specs/services/*/index.md
+  └── Extract YAML between "## Integration Contract" and next "##"
+  └── Convert YAML → JSON
+  └── Validate against opendesk_core.schema.json
+  └── FAIL build on validation errors
+```
+
+This catches three classes of drift that would otherwise go undetected:
+
+1. **Schema drift** — openDesk core updates the contract (e.g., adds a required field, changes an enum value). Services that haven't updated their contract block fail CI until they conform.
+2. **Integration drift** — a service changes its authentication protocol from SAML to OIDC but doesn't update its contract. CI catches the mismatch between the declared protocol and the schema constraint.
+3. **Version drift** — a service pins `coreContract: "2.0.0"` but the platform has moved to `2.1.0` with breaking changes. The validator can flag version-specific schema mismatches.
+
+**Bidirectional Traceability.** The contract creates a traceability chain between three artifacts that were previously disconnected:
+
+```
+opendesk_core.schema.json  (upstream contract definition)
+         │
+         ▼
+specs/services/*/index.md  (contract manifest — declaration)
+         │
+    ┌────┴────┐
+    ▼         ▼
+  Narrative    CI Pipeline
+  Spec        (validation — enforcement)
+```
+
+Without this chain, the platform team defines requirements, the spec team documents behavior, and the operations team configures services — each working from different sources of truth. The contract manifests collapse these into a single verifiable artifact.
+
+**Scope Exclusion.** Not every service requires a contract. Stateless tools (Draw.io, Excalidraw) that have no authentication, no routing, and no persistence are excluded. The criterion is simple: if a service declares at least one integration domain (identity, portal, routing, persistence, or observability), it must declare all that apply. Twenty-three of twenty-five services in the openDesk Edu platform meet this criterion.
+
+**Metadata Generation.** Because contract data is structured and machine-parseable, it can drive downstream artifacts. The `METADATA.yml` index — a table listing all services with their auth method, database engine, storage type, cache, and tier — can be auto-generated from contract manifests rather than hand-maintained. This eliminates the duplication problem: when a service's contract changes, the metadata index regenerates automatically.
+
+The integration contract component extends the OpenSpec framework's design principles:
+
+- **Machine-Verifiability First** — contracts are not documentation about integration; they are integration, expressed in a format that tools can verify.
+- **Completeness Over Perfection** — a contract with partial data is more valuable than no contract at all. The CI validator provides visibility into what is missing.
+- **Living Documents** — contracts evolve with the service and the platform, with schema version pinning to prevent silent breakage.
 
 ## 3. The Ralph Loop: From Vague Documentation to Living Specifications
 
@@ -797,7 +893,7 @@ We thank:
 
 ---
 
-**Paper Version**: 1.0
+**Paper Version**: 1.1
 **Date**: 2026-06-28
 **License**: Apache-2.0
 **Contact**: tobias.weiss@uni-marburg.de
