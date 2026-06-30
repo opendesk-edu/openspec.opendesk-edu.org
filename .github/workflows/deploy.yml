@@ -3,6 +3,8 @@ name: Deploy redirect to GitHub Pages
 on:
   push:
     branches: [master]
+  pull_request:
+    branches: [master]
   workflow_dispatch:
 
 permissions:
@@ -15,8 +17,129 @@ concurrency:
   cancel-in-progress: false
 
 jobs:
+  lint:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Check SPDX headers
+        run: |
+          VIOLATIONS=0
+          COUNT=0
+          while IFS= read -r f; do
+            COUNT=$((COUNT + 1))
+            if ! head -5 "$f" | grep -q 'SPDX-FileCopyrightText'; then
+              echo "::error file=$f::Missing SPDX header"
+              VIOLATIONS=$((VIOLATIONS + 1))
+            fi
+          done < <(find specs/ -name '*.md')
+          echo "Checked $COUNT specs"
+          if [ "$VIOLATIONS" -gt 0 ]; then
+            echo "::error::$VIOLATIONS files missing SPDX headers"
+            exit 1
+          fi
+          echo "All $COUNT specs have valid SPDX headers"
+
+      - name: Check broken cross-references
+        run: |
+          BROKEN=0
+          while IFS= read -r link; do
+            file=$(echo "$link" | cut -d: -f1)
+            target=$(echo "$link" | cut -d: -f2-)
+            # Resolve the target path relative to the file's directory
+            dir=$(dirname "$file")
+            resolved="$dir/$target"
+            # If it ends with /, check as directory with index.md
+            if [[ "$target" == */ ]]; then
+              if [ ! -f "${resolved}index.md" ]; then
+                echo "::error file=$file::Broken cross-ref: $target"
+                BROKEN=$((BROKEN + 1))
+              fi
+            else
+              if [ ! -f "$resolved" ] && [ ! -d "$resolved" ]; then
+                echo "::error file=$file::Broken cross-ref: $target"
+                BROKEN=$((BROKEN + 1))
+              fi
+            fi
+          done < <(grep -rohn '\.\./[^) "]*' specs/ --include='*.md' | grep -v '\.\.$')
+          if [ "$BROKEN" -gt 0 ]; then
+            echo "::error::$BROKEN broken cross-references found"
+            exit 1
+          fi
+          echo "All cross-references valid"
+
+      - name: Check sidebar matches specs
+        run: |
+          MISSING=0
+          # Check every sidebar ID resolves to a spec index.md
+          while IFS= read -r id; do
+            if [ ! -f "specs/$id/index.md" ]; then
+              echo "::warning file=docs/sidebars.ts::Sidebar references missing spec: $id"
+              MISSING=$((MISSING + 1))
+            fi
+          done < <(grep -oP "id: '([^']+)'" docs/sidebars.ts | sed "s/id: '//;s/'//")
+          if [ "$MISSING" -gt 0 ]; then
+            echo "::error::$MISSING sidebar entries point to missing specs"
+            exit 1
+          fi
+          echo "All sidebar entries resolve"
+
+      - name: Check contract anchors
+        run: |
+          BROKEN=0
+          # Collect all contract anchors used in service specs
+          while IFS= read -r anchor; do
+            # Strip leading #
+            anchor="${anchor#\#}"
+            if ! grep -q "id=\"$anchor\"" specs/integrations/api-contracts/index.md && \
+               ! grep -q "^## Contract: " specs/integrations/api-contracts/index.md | grep -qi "$(echo "$anchor" | sed 's/contract-//;s/-/ /g')"; then
+              # More robust: check if any ## Contract: header slugifies to this anchor
+              if ! grep "^## Contract:" specs/integrations/api-contracts/index.md | \
+                sed 's/^## Contract: //' | sed 's/[^a-zA-Z0-9].*//' | tr '[:upper:]' '[:lower:]' | \
+                grep -q "$(echo "$anchor" | sed 's/^contract-//;s/-.*//')"; then
+                echo "::warning::Possibly broken contract anchor: $anchor"
+              fi
+            fi
+          done < <(grep -roh '#contract-[a-z0-9-]*' specs/services/ --include='*.md' | sort -u)
+          echo "Contract anchor check complete"
+
+      - name: Check METADATA.yml matches spec count
+        run: |
+          ACTUAL=$(find specs/ -name 'index.md' | wc -l)
+          REPORTED=$(grep '^total_specs:' METADATA.yml | head -1 | awk '{print $2}')
+          if [ "$ACTUAL" -ne "$REPORTED" ]; then
+            echo "::warning file=METADATA.yml::total_specs is $REPORTED but found $ACTUAL index.md files"
+            echo "::error file=METADATA.yml::METADATA.yml total_specs ($REPORTED) does not match actual spec count ($ACTUAL)"
+            exit 1
+          fi
+          echo "METADATA.yml spec count matches ($ACTUAL)"
+
+  build-docs:
+    runs-on: ubuntu-latest
+    needs: lint
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Check Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Install dependencies
+        working-directory: docs
+        run: npm install
+
+      - name: Build Docusaurus
+        working-directory: docs
+        env:
+          # Disable S3/MinIO-dependent features during CI build
+          CI: true
+        run: npm run build
+
   deploy:
     runs-on: ubuntu-latest
+    needs: [lint, build-docs]
+    if: github.ref == 'refs/heads/master' && github.event_name == 'push'
     environment:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
