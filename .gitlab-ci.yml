@@ -1,20 +1,9 @@
-image: node:20
-
-stages:
-  - build
-
-cache:
-  key: ${CI_COMMIT_REF_SLUG}
-  paths:
-    - node_modules/
-
-build:
-  stage: build
+lint:
+  stage: .pre
+  image: alpine
   script:
-    - npm ci
-    - npm run build
-  artifacts:
-    paths:
-      - build/
+    - apk add --no-cache git
+    - find specs/ -name '*.md' -exec grep -L 'SPDX-FileCopyrightText' {} \;
+    - echo "Lint complete"
   rules:
     - if: $CI_COMMIT_BRANCH == "master"
